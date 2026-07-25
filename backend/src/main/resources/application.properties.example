@@ -1,0 +1,42 @@
+spring.application.name=portfolio_work
+
+# ===============================
+# Database
+# ===============================
+
+spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/portfolio}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME:portfolio_user}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:portfolio_password}
+
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# ===============================
+# JPA / Hibernate
+# ===============================
+
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO:validate}
+spring.jpa.open-in-view=false
+
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=false
+
+# ===============================
+# Flyway
+# ===============================
+
+spring.flyway.enabled=${SPRING_FLYWAY_ENABLED:true}
+spring.flyway.locations=${SPRING_FLYWAY_LOCATIONS:classpath:db/migration}
+
+# ===============================
+# Server
+# ===============================
+
+server.port=${SERVER_PORT:8080}
+
+# ===============================
+# Error handling
+# ===============================
+
+server.error.include-message=never
+server.error.include-stacktrace=never
+server.error.include-binding-errors=never

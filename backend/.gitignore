@@ -21,6 +21,13 @@ src/main/resources/application.properties
 *.iml
 *.ipr
 
+# Logs
+*.log
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
