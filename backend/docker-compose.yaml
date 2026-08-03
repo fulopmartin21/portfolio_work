@@ -36,8 +36,9 @@ services:
 
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-portfolio}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-portfolio_user}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-portfolio_password}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
 
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
 
