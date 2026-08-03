@@ -46,3 +46,13 @@ server.error.include-binding-errors=never
 # ===============================
 
 spring.profiles.active=${SPRING_PROFILES_ACTIVE:dev}
+
+# ===============================
+# JWT
+# ===============================
+
+jwt.private-key-path=${JWT_PRIVATE_KEY_PATH:.secrets/jwt-private.pem}
+jwt.public-key-path=${JWT_PUBLIC_KEY_PATH:.secrets/jwt-public.pem}
+
+jwt.issuer=${JWT_ISSUER:portfolio-work}
+jwt.access-token-expiration-seconds=${JWT_ACCESS_TOKEN_EXPIRATION_SECONDS:900}

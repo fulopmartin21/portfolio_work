@@ -1,4 +1,4 @@
-package org.portfolio.java.portfolio_work;
+package org.portfolio.java.portfolio_work.RegistrationTests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -44,7 +44,15 @@ services:
 
       SPRING_FLYWAY_ENABLED: "true"
       SPRING_FLYWAY_LOCATIONS: classpath:db/migration
+      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt-private.pem
+      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt-public.pem
 
+      JWT_ISSUER: ${JWT_ISSUER:-portfolio-work}
+      JWT_ACCESS_TOKEN_EXPIRATION_SECONDS: ${JWT_ACCESS_TOKEN_EXPIRATION_SECONDS:-900}
+
+    volumes:
+      - ./.secrets/jwt-private.pem:/run/secrets/jwt-private.pem:ro
+      - ./.secrets/jwt-public.pem:/run/secrets/jwt-public.pem:ro
     ports:
       - "${BACKEND_PORT:-8080}:8080"
 

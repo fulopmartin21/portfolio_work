@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.portfolio.java.portfolio_work.Registration.Requests.CreateUserRequest;
+import org.portfolio.java.portfolio_work.Login.Requests.LoginRequest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.UUID;
@@ -35,6 +36,12 @@ public class User
         this.lastName = request.getLastName();
         this.email = request.getEmail();
         this.password = passwordEncryptor(request.getPassword());
+    }
+
+    public User (LoginRequest request)
+    {
+        this.email = request.getEmail();
+        this.password = request.getPassword();
     }
 
     private String passwordEncryptor(String password)
