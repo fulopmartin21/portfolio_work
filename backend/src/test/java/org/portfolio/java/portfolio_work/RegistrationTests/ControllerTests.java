@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.portfolio.java.portfolio_work.Entities.Role;
 import org.portfolio.java.portfolio_work.Entities.User;
 import org.portfolio.java.portfolio_work.Exceptions.ConflictException.ConflictException;
 import org.portfolio.java.portfolio_work.Exceptions.ConflictException.ConflictExceptionSubType;
@@ -65,7 +66,8 @@ class ControllerTests {
                 "Martin",
                 "Fulop",
                 "martin@example.com",
-                "$2a$10$hashedPassword"
+                "$2a$10$hashedPassword",
+                Role.USER
         );
 
         when(registrationService.createUser(any(User.class)))

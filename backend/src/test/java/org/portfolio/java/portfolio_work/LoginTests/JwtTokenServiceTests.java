@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.portfolio.java.portfolio_work.Entities.Role;
 import org.portfolio.java.portfolio_work.Entities.User;
 import org.portfolio.java.portfolio_work.Login.ImpJwtTokenService;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -87,7 +89,7 @@ class JwtTokenServiceTests {
                 parameters.getClaims()
                         .getClaims()
                         .get("roles")
-        ).isEqualTo(java.util.List.of("USER"));
+        ).isEqualTo(List.of("USER"));
 
         assertThat(parameters.getClaims().getIssuedAt())
                 .isNotNull();
@@ -173,7 +175,8 @@ class JwtTokenServiceTests {
                 "Lajos",
                 "Lajos",
                 "lajos@lajos.com",
-                "$2a$10$encodedPassword"
+                "$2a$10$encodedPassword",
+                Role.USER
         );
     }
 
