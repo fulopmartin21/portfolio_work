@@ -287,6 +287,19 @@ Example:
 V1__create_users_table.sql
 ```
 
+## Token Revocation
+
+The application uses per-user JWT token versioning.
+
+Every access token contains a `tokenVersion` claim. For protected requests,
+the backend compares the version stored in the JWT with the current version
+stored in the database.
+
+JWT tokenVersion == database tokenVersion
+
+
+
+
 ## Project Structure
 
 ```text
