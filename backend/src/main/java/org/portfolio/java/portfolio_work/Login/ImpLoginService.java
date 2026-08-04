@@ -5,10 +5,7 @@ import org.portfolio.java.portfolio_work.Exceptions.UnauthorizedException.Unauth
 import org.portfolio.java.portfolio_work.Exceptions.UnauthorizedException.UnauthorizedExceptionSubType;
 import org.portfolio.java.portfolio_work.Login.Requests.LoginRequest;
 import org.portfolio.java.portfolio_work.Login.Responses.LoginResponse;
-import org.portfolio.java.portfolio_work.Login.Responses.LoginUserResponse;
-import org.portfolio.java.portfolio_work.Registration.RegistrationRepository;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,8 +50,7 @@ public class ImpLoginService implements ILoginService {
         return new LoginResponse(
                 accessToken,
                 TOKEN_TYPE,
-                jwtTokenService.getExpirationSeconds(),
-                new LoginUserResponse(user)
+                jwtTokenService.getExpirationSeconds()
         );
     }
 }

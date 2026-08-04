@@ -5,12 +5,13 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Value;
+import org.portfolio.java.portfolio_work.Login.TokenVersionValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
+import org.springframework.security.oauth2.core.OAuth2TokenValidator;
+import org.springframework.security.oauth2.jwt.*;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -51,10 +52,25 @@ public class JwtConfig {
 
     @Bean
     public JwtDecoder jwtDecoder(
-            RSAPublicKey publicKey
+            RSAPublicKey publicKey,
+            TokenVersionValidator tokenVersionValidator,
+            @Value("${jwt.issuer}") String issuer
     ) {
-        return NimbusJwtDecoder
-                .withPublicKey(publicKey)
-                .build();
+        NimbusJwtDecoder decoder =
+                NimbusJwtDecoder
+                        .withPublicKey(publicKey)
+                        .build();
+
+        OAuth2TokenValidator<Jwt> validators =
+                new DelegatingOAuth2TokenValidator<>(
+                        JwtValidators.createDefaultWithIssuer(
+                                issuer
+                        ),
+                        tokenVersionValidator
+                );
+
+        decoder.setJwtValidator(validators);
+
+        return decoder;
     }
 }

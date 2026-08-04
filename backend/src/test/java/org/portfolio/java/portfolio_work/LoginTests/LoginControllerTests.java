@@ -13,7 +13,6 @@ import org.portfolio.java.portfolio_work.Login.ILoginService;
 import org.portfolio.java.portfolio_work.Login.ImpLoginController;
 import org.portfolio.java.portfolio_work.Login.Requests.LoginRequest;
 import org.portfolio.java.portfolio_work.Login.Responses.LoginResponse;
-import org.portfolio.java.portfolio_work.Login.Responses.LoginUserResponse;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -63,11 +62,7 @@ class LoginControllerTests {
         LoginResponse response = new LoginResponse(
                 "signed.jwt.token",
                 "Bearer",
-                900L,
-                new LoginUserResponse(
-                        userId,
-                        "lajos@lajos.com"
-                )
+                900L
         );
 
         when(loginService.login(any(LoginRequest.class)))
@@ -99,14 +94,6 @@ class LoginControllerTests {
                 .andExpect(
                         jsonPath("$.expiresIn")
                                 .value(900)
-                )
-                .andExpect(
-                        jsonPath("$.user.id")
-                                .value(userId.toString())
-                )
-                .andExpect(
-                        jsonPath("$.user.email")
-                                .value("lajos@lajos.com")
                 )
                 .andExpect(
                         jsonPath("$.password").doesNotExist()

@@ -49,6 +49,10 @@ public class ImpJwtTokenService implements IJwtTokenService {
                         "roles",
                         List.of(user.getRole().name())
                 )
+                .claim(
+                        TokenVersionValidator.TOKEN_VERSION_CLAIM,
+                        user.getTokenVersion()
+                )
                 .build();
 
         JwsHeader header = JwsHeader
