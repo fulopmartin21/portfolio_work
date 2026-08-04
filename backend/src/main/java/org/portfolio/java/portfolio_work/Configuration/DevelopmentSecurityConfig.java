@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -14,7 +15,8 @@ public class DevelopmentSecurityConfig {
 
     @Bean
     public SecurityFilterChain developmentSecurityFilterChain(
-            HttpSecurity http
+            HttpSecurity http,
+            JwtAuthenticationConverter jwtAuthenticationConverter
     ) throws Exception {
 
         return http
@@ -31,10 +33,22 @@ public class DevelopmentSecurityConfig {
                                 "/v3/api-docs",
                                 "/v3/api-docs/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers("/users/**")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        .anyRequest()
+                        .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(Customizer.withDefaults())
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(
+                                        jwtAuthenticationConverter
+                                )
+                        )
                 )
                 .build();
     }

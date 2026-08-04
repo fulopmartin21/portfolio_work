@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class ImpJwtTokenService implements IJwtTokenService {
@@ -44,7 +45,10 @@ public class ImpJwtTokenService implements IJwtTokenService {
                 .expiresAt(expiresAt)
                 .subject(user.getId().toString())
                 .claim("email", user.getEmail())
-                .claim("roles", java.util.List.of("USER"))
+                .claim(
+                        "roles",
+                        List.of(user.getRole().name())
+                )
                 .build();
 
         JwsHeader header = JwsHeader
