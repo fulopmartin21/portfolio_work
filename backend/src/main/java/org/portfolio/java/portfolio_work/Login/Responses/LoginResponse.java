@@ -21,11 +21,6 @@ public record LoginResponse(
                 description = "Access-token lifetime in seconds.",
                 example = "900"
         )
-        long expiresIn,
-
-        @Schema(
-                description = "Public information about the authenticated user."
-        )
-        LoginUserResponse user
+        long expiresIn
 ) {
 }
