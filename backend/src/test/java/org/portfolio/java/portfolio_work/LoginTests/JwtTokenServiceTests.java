@@ -9,13 +9,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.portfolio.java.portfolio_work.Entities.Role;
 import org.portfolio.java.portfolio_work.Entities.User;
 import org.portfolio.java.portfolio_work.Login.ImpJwtTokenService;
+import org.portfolio.java.portfolio_work.Login.TokenVersionValidator;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +29,12 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class JwtTokenServiceTests {
+
+    private static final String ISSUER =
+            "https://portfolio-work.local";
+
+    private static final long EXPIRATION_SECONDS = 900L;
+
 
     @Mock
     private JwtEncoder jwtEncoder;
@@ -34,8 +45,8 @@ class JwtTokenServiceTests {
     void setUp() {
         jwtTokenService = new ImpJwtTokenService(
                 jwtEncoder,
-                "https://portfolio-work.local",
-                900L
+                ISSUER,
+                EXPIRATION_SECONDS
         );
     }
 
@@ -90,6 +101,18 @@ class JwtTokenServiceTests {
                         .getClaims()
                         .get("roles")
         ).isEqualTo(List.of("USER"));
+
+        assertThat(
+                parameters.getClaims()
+                        .getClaims()
+                        .get(
+                                TokenVersionValidator
+                                        .TOKEN_VERSION_CLAIM
+                        )
+        ).isEqualTo(user.getTokenVersion());
+
+        assertThat(user.getTokenVersion())
+                .isZero();
 
         assertThat(parameters.getClaims().getIssuedAt())
                 .isNotNull();

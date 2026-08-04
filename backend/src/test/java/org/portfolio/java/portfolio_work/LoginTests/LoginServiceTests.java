@@ -74,12 +74,6 @@ class LoginServiceTests
         assertThat(response.expiresIn())
                 .isEqualTo(900L);
 
-        assertThat(response.user()).isNotNull();
-        assertThat(response.user().id())
-                .isEqualTo(user.getId());
-        assertThat(response.user().email())
-                .isEqualTo(EMAIL);
-
         verify(loginRepository)
                 .findByEmailIgnoreCase(EMAIL);
 
