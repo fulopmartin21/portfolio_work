@@ -29,6 +29,9 @@ public class User
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 20)
+    private Role role = Role.USER;
 
     public User (CreateUserRequest request)
     {

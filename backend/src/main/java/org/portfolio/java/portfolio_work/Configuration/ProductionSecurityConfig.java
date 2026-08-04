@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -12,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ProductionSecurityConfig {
 
     @Bean
-    public SecurityFilterChain productionSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain productionSecurityFilterChain(HttpSecurity http, JwtAuthenticationConverter jwtAuthenticationConverter) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session
@@ -20,19 +21,29 @@ public class ProductionSecurityConfig {
                 )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                "/create-user",
+                                "/login",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/v3/api-docs",
                                 "/v3/api-docs/**"
                         ).denyAll()
-                        .requestMatchers(
-                                "/create-user",
-                                "/login"
-                        ).permitAll()
-                        .anyRequest().authenticated()
+
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
+
+                        .requestMatchers("/users/**")
+                        .hasAnyRole("USER", "ADMIN")
+
+                        .anyRequest()
+                        .authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(Customizer.withDefaults())
+                        .jwt(jwt -> jwt
+                                .jwtAuthenticationConverter(
+                                        jwtAuthenticationConverter
+                                )
+                        )
                 )
                 .build();
     }

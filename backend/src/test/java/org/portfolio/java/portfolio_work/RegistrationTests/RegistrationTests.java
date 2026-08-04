@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.portfolio.java.portfolio_work.Entities.Role;
 import org.portfolio.java.portfolio_work.Entities.User;
 import org.portfolio.java.portfolio_work.Exceptions.ConflictException.ConflictException;
 import org.portfolio.java.portfolio_work.Exceptions.ConflictException.ConflictExceptionSubType;
@@ -50,7 +51,8 @@ class RegistrationTests
                 "Martin",
                 "Fulop",
                 "martin@example.com",
-                user.getPassword()
+                user.getPassword(),
+                Role.USER
         );
 
         when(registrationRepository.existsByEmailIgnoreCase(
@@ -69,6 +71,7 @@ class RegistrationTests
         assertThat(result.getFirstName()).isEqualTo("Martin");
         assertThat(result.getLastName()).isEqualTo("Fulop");
         assertThat(result.getEmail()).isEqualTo("martin@example.com");
+        assertThat(result.getRole()).isEqualTo(Role.USER);
 
         verify(registrationRepository)
                 .existsByEmailIgnoreCase("martin@example.com");

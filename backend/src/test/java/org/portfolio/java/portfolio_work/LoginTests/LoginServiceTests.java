@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.portfolio.java.portfolio_work.Entities.Role;
 import org.portfolio.java.portfolio_work.Entities.User;
 import org.portfolio.java.portfolio_work.Exceptions.UnauthorizedException.UnauthorizedException;
 import org.portfolio.java.portfolio_work.Exceptions.UnauthorizedException.UnauthorizedExceptionSubType;
@@ -226,7 +227,8 @@ class LoginServiceTests
                 "Lajos",
                 "Lajos",
                 EMAIL,
-                encodedPassword
+                encodedPassword,
+                Role.USER
         );
     }
 }
