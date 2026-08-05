@@ -33,6 +33,20 @@ public enum BadRequestExceptionSubType implements ApiErrorSubType {
     MALFORMED_REQUEST_BODY(
             6,
             "The request body is malformed."
+    ),
+    NEW_EMAIL_EQUALS_CURRENT_EMAIL(
+        7,
+            "The new email address must differ from the current email address."
+            ),
+
+    PASSWORD_CONFIRMATION_MISMATCH(
+        8,
+        "The new password and confirmation do not match."
+    ),
+
+    NEW_PASSWORD_EQUALS_CURRENT_PASSWORD(
+        9,
+        "The new password must differ from the current password."
     );
 
     private final int number;

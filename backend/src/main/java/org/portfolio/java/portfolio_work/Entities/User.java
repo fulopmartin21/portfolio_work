@@ -1,6 +1,10 @@
 package org.portfolio.java.portfolio_work.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -103,6 +107,15 @@ public class User
         this.password = password;
         this.role = role;
         this.tokenVersion = 0L;
+    }
+
+    public User(String firstName, String lastName, String Email, String password,Role role)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = Email;
+        this.password = passwordEncryptor(password);
+        this.role = role;
     }
 
     private String passwordEncryptor(String password)
